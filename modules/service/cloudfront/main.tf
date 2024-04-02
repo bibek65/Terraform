@@ -94,7 +94,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 }
 
 resource "aws_cloudfront_origin_access_control" "s3_distribution" {
-  name                              = "Bibek OAC S3"
+  name                              = "${var.oac_name}-OAC"
   description                       = "OAC setup for S3_OAC"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
