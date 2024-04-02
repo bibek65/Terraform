@@ -10,7 +10,6 @@ module "frontend_cloudfront" {
   source     = "../cloudfront"
 
   bucket_name_id = module.frontend.bucket_name
-  oac_name = var.domain_name
 
 }
 
