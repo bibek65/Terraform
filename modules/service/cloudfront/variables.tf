@@ -1,5 +1,4 @@
-
-variable "OAC" {
-  type    = string
-  default = "bibek-OAC-S3"
+variable "bucket_name_id" {
+  type = string
 }
+

@@ -1,4 +1,3 @@
 variable "bucket_name" {
-  type    = string
-  default = "bibek-bucket"
+  type = string
 }

@@ -1,10 +1,7 @@
 data "aws_s3_bucket" "s3" {
-  bucket = "bibek-test-bucket"
+  bucket = var.bucket_name_id
 }
 
-output "s3_bucket" {
-  value = data.aws_s3_bucket.s3.bucket
-}
 
 resource "aws_s3_bucket_policy" "origin" {
   depends_on = [
@@ -97,7 +94,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 }
 
 resource "aws_cloudfront_origin_access_control" "s3_distribution" {
-  name                              = var.OAC
+  name                              = "Bibek OAC S3"
   description                       = "OAC setup for S3_OAC"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"

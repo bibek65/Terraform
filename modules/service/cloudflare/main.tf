@@ -3,14 +3,6 @@ data "cloudflare_zone" "this" {
 }
 
 
-data "external" "cloudfront_arn" {
-  program = ["bash", "${path.module}/get_cloudfront_arn.sh"]
-}
-
-data "aws_cloudfront_distribution" "my_distribution" {
-  id = data.external.cloudfront_arn.result["arn"]
-}
-
 
 resource "cloudflare_record" "my_cname" {
   zone_id = data.cloudflare_zone.this.id
