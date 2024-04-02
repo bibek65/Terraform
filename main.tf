@@ -1,6 +1,6 @@
 module "frontend_app" {
 
-  source = "./modules/service/workflow"
+  source = "git@github.com:bibek65/Terraform.git//modules/service/workflow"
 
 }
 

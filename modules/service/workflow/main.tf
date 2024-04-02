@@ -8,6 +8,4 @@ module "frontend_cloudfront" {
   depends_on = [module.frontend]
   source     = "../cloudfront"
 
-
-  domain = "bibek65.tech"
 }

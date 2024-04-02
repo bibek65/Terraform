@@ -81,7 +81,6 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
 
   }
 
-  aliases = [var.domain]
 
   price_class = "PriceClass_100"
 
