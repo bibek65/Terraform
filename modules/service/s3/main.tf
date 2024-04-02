@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "default" {
-  bucket = "bibek-test-bucket"
+  bucket = var.bucket_name
   tags = {
-    Name = "bibek-test-bucket"
+    Name = var.bucket_name
   }
 }
 

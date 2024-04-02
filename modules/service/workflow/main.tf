@@ -9,3 +9,10 @@ module "frontend_cloudfront" {
   source     = "../cloudfront"
 
 }
+
+module "cloudflare" {
+  source = "../cloudflare"
+
+  cloudfront_domain_name = module.frontend_cloudfront.domain_name
+
+}
