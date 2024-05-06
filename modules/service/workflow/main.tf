@@ -66,7 +66,7 @@ module "ecs_ec2_alb" {
     {
       port               = 443
       protocol           = "HTTPS"
-      certificate_arn    = "arn:aws:iam::123456789012:server-certificate/test_cert-123456789012"
+      certificate_arn    = module.acm.certificate_arn
       target_group_index = 0
     }
   ]
@@ -95,6 +95,35 @@ module "rds" {
 
 
 
+module "route53" {
+  source = "../route53"
+  domain_name = var.domain_name
+  alb_dns_name = module.ecs_ec2_alb.lb_dns_name
+  alb_zone_id = module.ecs_ec2_alb.lb_zone_id
+  cloudfront_domain_name = module.frontend_cloudfront.cloudfront_domain_name
+  cloudfront_zone_id = module.frontend_cloudfront.hosted_zone_id
+}
+
+module "acm" {
+  source = "../acm"
+  depends_on = [module.route53]
+  domain_name = var.domain_name
+  alternative_name = "*.${var.domain_name}"
+}
+
+module "s3_endpoint" {
+  source = "../s3-endpoint"
+  depends_on = [module.vpc_subnet_module]
+  vpc_id = module.vpc_subnet_module.vpc_id
+  route_table_id = module.vpc_subnet_module.public_subnets[2]
+}
+
+module "waf" {
+  source = "../waf"
+  depends_on = [module.vpc_subnet_module]
+  aws_lb_arn = module.ecs_ec2_alb.lb_arn
+  cloudfront_distribution_arn = module.frontend_cloudfront.distribution_arn
+}
 
 
 

@@ -9,6 +9,7 @@ module "app" {
     private_subnets    = ["10.30.128.0/24", "10.30.129.0/24", "10.30.130.0/24"]
     enable_nat_gateway = true
   }
+  domain_name = "myapp.com"
 }
 
 

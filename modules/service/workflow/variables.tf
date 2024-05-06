@@ -13,3 +13,7 @@ variable "vpc_subnet_module" {
   })
 }
 
+variable "domain_name" {
+  type = string
+}
+
