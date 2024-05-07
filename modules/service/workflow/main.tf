@@ -31,8 +31,8 @@ module "bastion_host" {
   subnet_id  = module.vpc_subnet_module.private_subnets[1]
 }
 
-module "asg" {
-  source     = "../asg"
+module "ecs-ec2" {
+  source     = "../ecs-ec2"
   depends_on = [module.vpc_subnet_module]
   subnet_ids = module.vpc_subnet_module.private_subnets
   vpc_id     = module.vpc_subnet_module.vpc_id
