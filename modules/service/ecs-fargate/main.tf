@@ -14,7 +14,7 @@ resource "aws_security_group" "api" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = [var.cidr_block]
   }
 
 }
@@ -44,6 +44,10 @@ resource "aws_iam_role" "execution_role" {
   }
 }
 
+resource "aws_ecs_cluster" "ml" {
+  name = "ml-ecs-cluster"
+}
+
 resource "aws_ecs_task_definition" "api" {
   family                   = "api"
   network_mode             = "awsvpc"
@@ -65,15 +69,15 @@ resource "aws_ecs_task_definition" "api" {
 
 resource "aws_ecs_service" "api" {
   name    = "api"
-  cluster = module.ecs.this_ecs_cluster_arn
+  cluster = aws_ecs_cluster.ml.arn
 
   task_definition = aws_ecs_task_definition.api.arn
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets          = module.vpc_subnet_module.public_subnets
+    subnets          = var.public_subnets
     security_groups  = [aws_security_group.api.id]
-    assign_public_ip = true
+    assign_public_ip = false
   }
   desired_count = 1
 }

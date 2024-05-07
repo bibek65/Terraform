@@ -125,7 +125,22 @@ module "waf" {
   cloudfront_distribution_arn = module.frontend_cloudfront.distribution_arn
 }
 
+module "secret_manager" {
+  source = "../secret-manager"
+  db_password = var.db_password
+}
 
+module "email-ses"{
+  source = "../email-ses"
+}
+
+module "ecs-fargate" {
+  source = "../ecs-fargate"
+  depends_on = [module.vpc_subnet_module]
+  vpc_id = module.vpc_subnet_module.vpc_id
+  cidr_block = module.vpc_subnet_module.vpc_cidr_block
+  public_subnets = [module.vpc_subnet_module.public_subnets[0]]
+}
 
 
 

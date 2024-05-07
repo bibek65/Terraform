@@ -10,6 +10,7 @@ module "app" {
     enable_nat_gateway = true
   }
   domain_name = "myapp.com"
+  db_password = "securepassword123"
 }
 
 
